@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mohan Life</title>
+<meta name="theme-color" content="#14102b">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Mohan Life">
+<meta name="application-name" content="Mohan Life">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<link rel="icon" type="image/png" href="icons/icon-32.png">
+<style>
+@font-face{font-family:'Vazirmatn';font-style:normal;font-weight:100 900;font-display:swap;src:url(fonts/Vazirmatn.woff2) format('woff2')}
+
+.brand{display:inline-flex;align-items:center;gap:10px;direction:ltr;padding:6px 18px 6px 7px;border-radius:99px;
+  background:var(--glass);border:1px solid var(--glass-b);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  font-weight:800;font-size:15px;letter-spacing:.6px;margin-bottom:14px;box-shadow:var(--shadow)}
+.brand img{width:30px;height:30px;border-radius:9px;display:block}
+:root{
+  --bg1:#14102b; --bg2:#1d1540; --text:#f3f0ff; --muted:#bdb6dd;
+  --glass:rgba(255,255,255,.07); --glass-b:rgba(255,255,255,.16);
+  --shadow:0 10px 40px rgba(0,0,0,.35);
+}
+@media (prefers-color-scheme: light){
+  :root{
+    --bg1:#f4f0ff; --bg2:#ffeef6; --text:#231a47; --muted:#5d5486;
+    --glass:rgba(255,255,255,.55); --glass-b:rgba(255,255,255,.9);
+    --shadow:0 10px 40px rgba(90,60,160,.15);
+  }
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{
+  font-family:'Vazirmatn',system-ui,-apple-system,'Segoe UI',Tahoma,sans-serif;
+  color:var(--text);
+  background:linear-gradient(160deg,var(--bg1),var(--bg2));
+  min-height:100vh; line-height:2;
+  padding:env(safe-area-inset-top) 0 calc(env(safe-area-inset-bottom) + 40px);
+  overflow-x:hidden;
+}
+/* floating color blobs */
+.blobs{position:fixed;inset:0;z-index:-1;overflow:hidden}
+.blobs i{position:absolute;border-radius:50%;filter:blur(70px);opacity:.55;animation:float 18s ease-in-out infinite}
+.blobs i:nth-child(1){width:320px;height:320px;background:#7c5cff;top:-80px;right:-60px}
+.blobs i:nth-child(2){width:280px;height:280px;background:#ff5ca8;top:35%;left:-90px;animation-delay:-6s}
+.blobs i:nth-child(3){width:300px;height:300px;background:#2fd4c0;bottom:-90px;right:10%;animation-delay:-11s}
+.blobs i:nth-child(4){width:220px;height:220px;background:#ffb35c;top:60%;right:-70px;animation-delay:-3s;opacity:.4}
+@keyframes float{50%{transform:translate(30px,-40px) scale(1.12)}}
+@media (prefers-reduced-motion:reduce){.blobs i{animation:none}}
+
+.wrap{max-width:720px;margin:0 auto;padding:0 16px}
+
+header.hero{padding:44px 4px 20px;text-align:center}
+.hero h1{
+  font-weight:900;font-size:clamp(34px,9vw,52px);line-height:1.4;letter-spacing:-.5px;
+  background:linear-gradient(90deg,#9b7bff,#ff5ca8,#ffb35c);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+
+/* sticky nav */
+nav.tabs{
+  position:sticky;top:0;z-index:20;padding:calc(env(safe-area-inset-top) + 10px) 0 10px;
+  backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);
+  background:linear-gradient(var(--bg1),transparent);
+}
+nav.tabs .row{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:2px 16px;max-width:720px;margin:0 auto}
+nav.tabs .row::-webkit-scrollbar{display:none}
+nav.tabs a{
+  flex:none;text-decoration:none;color:var(--text);font-weight:500;font-size:14px;
+  padding:6px 16px;border-radius:99px;background:var(--glass);border:1px solid var(--glass-b);
+  line-height:1.8;
+}
+nav.tabs a:active{transform:scale(.96)}
+
+section.part{margin-top:34px}
+h2.part-title{
+  font-weight:900;font-size:26px;line-height:1.6;margin:0 4px 14px;
+  display:flex;align-items:center;gap:10px;
+}
+h2.part-title::before{content:"";width:8px;height:28px;border-radius:6px;background:linear-gradient(#9b7bff,#ff5ca8)}
+
+/* glass cards */
+.card{
+  --h:260;
+  position:relative;margin-bottom:14px;padding:18px 20px 16px;border-radius:24px;
+  background:
+    linear-gradient(135deg,hsla(var(--h),90%,65%,.20),transparent 60%),
+    var(--glass);
+  border:1px solid var(--glass-b);
+  backdrop-filter:blur(22px) saturate(1.5);-webkit-backdrop-filter:blur(22px) saturate(1.5);
+  box-shadow:var(--shadow), inset 0 1px 0 rgba(255,255,255,.25);
+  overflow:hidden;
+}
+.card::after{
+  content:"";position:absolute;top:0;right:0;left:0;height:3px;
+  background:linear-gradient(90deg,hsl(var(--h),90%,65%),hsl(calc(var(--h) + 50),90%,68%));
+  opacity:.9;
+}
+.card h3{
+  font-weight:800;font-size:18px;line-height:1.7;margin-bottom:4px;
+  color:hsl(var(--h),95%,78%);
+}
+@media (prefers-color-scheme: light){ .card h3{color:hsl(var(--h),65%,38%)} }
+.card p{font-weight:400;font-size:16px;color:var(--text);opacity:.95}
+.card.wide p{font-size:16px}
+
+ul.list,ol.list{list-style:none;counter-reset:n;margin-top:4px}
+.list li{position:relative;padding:3px 34px 3px 0;font-size:16px}
+ul.list li::before{
+  content:"";position:absolute;right:8px;top:17px;width:9px;height:9px;border-radius:50%;
+  background:hsl(var(--h),90%,68%);box-shadow:0 0 12px hsl(var(--h),90%,68%);
+}
+ol.list li{counter-increment:n}
+ol.list li::before{
+  content:counter(n,persian);position:absolute;right:0;top:8px;width:24px;height:24px;border-radius:8px;
+  display:grid;place-items:center;font-size:12px;font-weight:800;line-height:1;
+  background:hsla(var(--h),90%,65%,.28);color:hsl(var(--h),95%,80%);
+}
+@media (prefers-color-scheme: light){ ol.list li::before{color:hsl(var(--h),65%,35%)} }
+
+footer{text-align:center;color:var(--muted);font-size:13px;margin-top:36px}
+</style>
+</head>
+<body>
+<div class="blobs"><i></i><i></i><i></i><i></i></div>
+
+<header class="hero wrap">
+  <div class="brand"><img src="icons/icon-180.png" alt="" width="30" height="30">Mohan Life</div>
+  <h1>یادداشت‌های شخصی من</h1>
+</header>
+
+<nav class="tabs">
+  <div class="row">
+    <a href="#notes">یادداشت‌ها</a>
+    <a href="#compass">قطب‌نمای من</a>
+    <a href="#principles">اصول زندگی</a>
+    <a href="#decision">تصمیم‌گیری</a>
+    <a href="#cycle">چرخه</a>
+    <a href="#energy">هدایت انرژی</a>
+    <a href="#risk">مدیریت ریسک</a>
+    <a href="#course">خرید دوره</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<!-- ================= یادداشت‌ها ================= -->
+<section class="part" id="notes">
+  <h2 class="part-title">یادداشت‌های شخصی من</h2>
+
+  <div class="card" style="--h:45"><h3>✨ نقاط قوت</h3><p>ثبات و استقامت درونی، ذهن باز و انسانی، اراده عمیق و قدرت دگرگونی</p></div>
+
+  <div class="card" style="--h:350"><h3>⚡️ نقاط چالشی</h3><p>تمایل به کنترل و سخت‌گیری خودم، فاصله عاطفی در روابط نزدیک، کشش میان ثبات و تغییر</p></div>
+
+  <div class="card" style="--h:275"><h3>🔮 استعداد پنهان</h3><p>تخریب پنهان یعنی انبساط خردمندانه و انقباض انضباطی؛ یعنی شکستن ساختار کهنه و ساختن جهان‌های نو از زیر آوار؛ یعنی از میان شعله نابودی عبور و سالم‌تر از قبل بیرون آمدن.</p></div>
+
+  <div class="card" style="--h:140"><h3>🌱 رشد واقعی</h3><p>مواجهه با چالش‌های عمیق در روابط، و دنبال کردن دانش و معنای بالاتر زندگی</p></div>
+
+  <div class="card" style="--h:30"><h3>😊 چیزی که حالم را خوب می‌کند</h3><p>حرکت فیزیکی، کار تکراری و بی‌فکر (مرتب‌کردن و تمیزکاری)، فیلم و سریال عجیب، نوشتن بدون سانسور</p></div>
+
+  <div class="card" style="--h:185"><h3>🩺 نقاط حساس بدن</h3><p>گوارش و پوست، سیستم ایمنی و عصبی و ذهنی و روحی، مفاصل و استخوان‌ها</p></div>
+
+  <div class="card" style="--h:160"><h3>🛡 پیشگیری</h3><p>ریتم خواب ثابت، غذای ساده و گرم، کار متمرکز روزانه</p></div>
+
+  <div class="card" style="--h:10"><h3>⚠️ اشتباهات تکراری</h3><p>اعتماد زود و خیلی کامل؛ بار دیگران را تا لحظه فروپاشی به دوش کشیدن؛ حقیقت را در بدترین زمان ممکن و بی‌رحم‌ترین لحن ممکن به زبان آوردن؛ خودم را در ذهنم شکست‌خورده فرض کردن قبل از اینکه میدان مرا محک بزند؛ سخت تصمیم گرفتن و اگر گرفتم کوه هم نتواند من را تکان بدهد.</p></div>
+
+  <div class="card" style="--h:230"><h3>🪞 هویت</h3><p>هویت من از طریق روابط شکل می‌گیرد. احساساتم منطقی و جمع‌گرایانه است، همراه با کار، خلاقیت و انسان‌دوستی. حرف زیاد نمی‌زنم ولی اگر بزنم عمیق است.</p></div>
+
+  <div class="card" style="--h:330"><h3>💞 عشق و ارزش‌ها</h3><p>با بلوغ، مسئولیت و جستجوی معنا گره خورده (مهم است طرفم از نظر فکری و ذهنی هم‌سطحم باشد)</p></div>
+
+  <div class="card" style="--h:50"><h3>⚡️ انرژی</h3><p>انرژی زیادی دارم ولی به‌جای عمل، به تنش درون تبدیل می‌شود — باید درست هدایت شود.</p></div>
+
+  <div class="card" style="--h:120"><h3>🍀 بخت و برکت</h3><p>از طریق شخصیت متعادل و خردمندانه به من می‌رسد.</p></div>
+
+  <div class="card" style="--h:200"><h3>📚 درس‌های بزرگ زندگی</h3><p>از طریق کار روزانه، سلامتی و خدمت به دیگران صورت می‌گیرد.</p></div>
+
+  <div class="card" style="--h:255"><h3>💼 در کار</h3><p>بسیار منظم، صبور، سخت‌کوش — گاهی بیش از حد سخت می‌گیرم. موفقیت با پشتکار است نه عجله.</p></div>
+
+  <div class="card" style="--h:300"><h3>🧠 هشدار ذهنی</h3><p>گاهی اینقدر درگیر ذهن می‌شوم که از احساسات واقعی خودم و دیگران فاصله می‌گیرم.</p></div>
+
+  <div class="card" style="--h:20"><h3>🎨 شجاعت و انرژی</h3><p>سمت مسائل خلاقانه، عشق و سرگرمی است.</p></div>
+
+  <div class="card" style="--h:175"><h3>🗣 ارتباطات</h3><p>ابراز یادگیری است.</p></div>
+
+  <div class="card" style="--h:55"><h3>🌤 خوش‌بینی</h3><p>عمیق‌تر و درونی‌تر از بقیه است.</p></div>
+
+  <div class="card" style="--h:40"><h3>🏆 جاه‌طلبی</h3><p>در ارتباطات، پول و ارزش‌های شخصی دارم. دوست دارم از طریق صحبت، نوشتن یا تجارت به موفقیت غیرمنتظره برسم.</p></div>
+
+  <div class="card" style="--h:265"><h3>🔍 بصیرت و رهایی</h3><p>در حوزه معنویت، تحقیقات عمیق و مسائل پنهان جریان دارد. در تنهایی و کندوکاو در اسرار زندگی به آرامش و دانایی می‌رسم.</p></div>
+
+  <div class="card" style="--h:320"><h3>🚀 رشد سریع‌تر</h3><p>خرد درونی + مواجهه با بحران‌های تحول‌آفرین + روبه‌رو شدن با شرایط غیرمنتظره و غیرآشنا (ابهام)</p></div>
+
+  <div class="card" style="--h:150"><h3>💪 قوی شدن</h3><p>خرد و باورهای عمیق، عمل خالصانه و خدمت، تنهایی و خلوت سازنده</p></div>
+
+  <div class="card" style="--h:210"><h3>🎯 ماموریت</h3><p>ایجاد پلی بین عمیق و عمل ملموس؛ یعنی چیزی که یاد می‌گیرم باید تبدیل کنم به کمک، کالا یا آموزش — تنهایی کار نکنم.</p></div>
+
+  <div class="card" style="--h:95"><h3>🌿 لذت و زندگی خوب</h3><p>ریتم ثابت و قابل‌پیش‌بینی در زندگی روزمره: کار، خواب، غذا، تفریح و یادگیری مداوم، طبیعت و خلوت و ارتباطات اصیل، بازدهی بالا در دوران مختلف زندگی</p></div>
+
+  <div class="card" style="--h:0"><h3>🕳 نقطه کور</h3><p>تاثیر کلام روی دیگران (گفتن حقیقت ناراحت‌کننده در بدترین زمان ممکن)؛ اعتماد سریع</p></div>
+
+  <div class="card" style="--h:285"><h3>💭 یادآوری مهم</h3><p>همه‌چیز با منطق حل نمی‌شود، چون انسان‌ها یک مسئله ریاضی نیستند — گاهی یک سکوت و گوش‌دادن هستند.</p></div>
+
+  <div class="card" style="--h:48"><h3>💰 مسیر کسب درآمد</h3><p>ازدواج و شراکت، مسیر خارجی، مسیر مادری یا ارث، سبک مالی</p></div>
+</section>
+
+<!-- ================= قطب‌نما ================= -->
+<section class="part" id="compass">
+  <h2 class="part-title">قطب‌نمای من</h2>
+
+  <div class="card" style="--h:215"><h3>جهت زندگی</h3><p>ساختن ثبات مالی، سلامت و انضباط؛ سپس توسعه کسب‌وکارهایی که به دیگران خدمت کنند و برای من آزادی، زیبایی و معنا بسازند.</p></div>
+
+  <div class="card" style="--h:280"><h3>ارزش‌های اجرایی</h3><p>قدرت بدون خودنمایی، حقیقت بدون اغراق، ایمان بدون فرار از مسئولیت و صبر بدون بی‌عملی.</p></div>
+
+  <div class="card" style="--h:10"><h3>ترس مهم من</h3><p>مصرف‌کردن انرژی در مسیر اشتباه. پاسخ عملی: آزمایش کوچک، سقف هزینه، معیار نتیجه و امکان توقف؛ نه انتظار برای اطمینان کامل.</p></div>
+
+  <div class="card" style="--h:150"><h3>تعریف موفقیت فعلی</h3><p>مغازه و وضعیت مالی‌ام روشن‌تر شود، اقدام‌های فروشم منظم شود و بدون فرسودگی جلو بروم. تعداد دوره‌ها، پروژه‌ها و ساعت‌های مشغول‌بودن، معیار موفقیت نیست.</p></div>
+
+  <div class="card" style="--h:310"><h3>جایگاه معنویت</h3><p>مراقبه، ذکر، مطالعه و خدمت می‌توانند در زندگی روزمره من جا داشته باشند. تحلیل نجومی را فقط در بخش باور و معنا نگه می‌دارم؛ زمان‌بندی، امتیازهای معنوی و پیش‌بینی‌های آن مبنای تصمیم مالی یا پزشکی من نیستند. فعالیت‌های انرژی‌محور را جایگزین ارزیابی یا درمان پزشکی نمی‌کنم.</p></div>
+</section>
+
+<!-- ================= اصول زندگی ================= -->
+<section class="part" id="principles">
+  <h2 class="part-title">اصول زندگی</h2>
+  <div class="card" style="--h:35">
+    <ul class="list">
+      <li>قدرت بدون خودنمایی.</li>
+      <li>حقیقت بدون بی‌رحمی.</li>
+      <li>ایمان بدون فرار از مسئولیت.</li>
+      <li>صبر بدون بی‌عملی.</li>
+      <li>ثروت همراه با آرامش.</li>
+      <li>دانش همراه با اجرا.</li>
+      <li>رشد همراه با همکاری.</li>
+      <li>انضباط بدون فرسودگی.</li>
+      <li>تمرکز به‌جای پراکندگی.</li>
+      <li>بازنگری بدون لجاجت.</li>
+      <li>مراقبت از بدن و ذهن بخشی از مسیر موفقیت است.</li>
+      <li>پروژه‌ها را بر اساس ظرفیت واقعی انتخاب کن، نه هیجان لحظه‌ای.</li>
+      <li>شکست را به یادگیری تبدیل کن، بدون اینکه هر مشکل یک مسیر تازه شروع کند.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= اصول تصمیم‌گیری ================= -->
+<section class="part" id="decision">
+  <h2 class="part-title">اصول تصمیم‌گیری</h2>
+  <div class="card" style="--h:190">
+    <ul class="list">
+      <li>حفظ سرمایه و افزایش جریان نقدی.</li>
+      <li>سودآوری واقعی مهم‌تر از ظاهر رشد.</li>
+      <li>تعداد محدودی پروژه فعال.</li>
+      <li>تبدیل دانش به اقدام و نتیجه قابل اندازه‌گیری.</li>
+      <li>بازنگری تصمیم‌ها بر اساس شواهد واقعی.</li>
+      <li>کسب‌وکارهای مکمل به‌جای پراکندگی.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= چرخه ================= -->
+<section class="part" id="cycle">
+  <h2 class="part-title">چرخه‌ای که باید بشناسم</h2>
+  <div class="card" style="--h:350">
+    <ol class="list">
+      <li>احساس تهدید، تردید یا طردشدگی</li>
+      <li>افزایش کنترل</li>
+      <li>سرکوب احساسات</li>
+      <li>فاصله‌گیری عاطفی</li>
+      <li>انباشته شدن فشار</li>
+      <li>انفجار ناگهانی یا قطع رابطه</li>
+    </ol>
+  </div>
+
+  <h2 class="part-title" style="font-size:21px;margin-top:22px">وقتی چرخه را دیدم</h2>
+  <div class="card" style="--h:165">
+    <ol class="list">
+      <li>تهدید واقعی است یا برداشت ذهنی؟</li>
+      <li>احساس اصلی‌ام را نام ببرم.</li>
+      <li>رفتار مشخصی را که آزارم داده بگویم، نه شخصیت طرف مقابل را.</li>
+      <li>درخواست یا مرزم را روشن بگویم.</li>
+      <li>پیش از تصمیم غیرقابل بازگشت، زمان آرام شدن بگذارم.</li>
+      <li>گفت‌وگوی مستقیم و محترمانه به‌جای سکوت طولانی.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ================= هدایت انرژی ================= -->
+<section class="part" id="energy">
+  <h2 class="part-title">هدایت انرژی</h2>
+  <div class="card" style="--h:25">
+    <ul class="list">
+      <li>هر روز یک اقدام مشخص و مهم.</li>
+      <li>تعداد پروژه‌های فعال محدود.</li>
+      <li>حرکت فیزیکی برای کم کردن تنش.</li>
+      <li>افکار را روی کاغذ بیاورم.</li>
+      <li>زمان اجرا و زمان تحلیل جدا.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= مدیریت ریسک ================= -->
+<section class="part" id="risk">
+  <h2 class="part-title">قواعد مدیریت ریسک</h2>
+  <div class="card" style="--h:260">
+    <ul class="list">
+      <li>پیش از تعهد مالی بزرگ، ۲۴ تا ۴۸ ساعت صبر.</li>
+      <li>فرضیه، دلیل، هزینه و سناریوی شکست را بنویسم.</li>
+      <li>ذخیره نقدی برای هزینه‌های ضروری.</li>
+      <li>سرمایه کسب‌وکار، شخصی و پرریسک جدا.</li>
+      <li>سقف زیان و اندازه موقعیت را پیش از ورود تعیین کنم.</li>
+      <li>تمرکز بیش از حد روی یک دارایی ممنوع.</li>
+      <li>معامله در شب و هنگام محاق: قاعده شخصی برای کم کردن معاملات هیجانی.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= خرید دوره ================= -->
+<section class="part" id="course">
+  <h2 class="part-title">پیش از خرید دوره جدید</h2>
+  <div class="card" style="--h:195">
+    <ul class="list">
+      <li>آیا دوره قبلی به خروجی عملی تبدیل شده؟</li>
+      <li>هدف یادگیری و مهارت مورد انتظار چیست؟</li>
+      <li>هزینه کل، زمان لازم و خروجی عملی را بنویسم.</li>
+    </ul>
+  </div>
+</section>
+
+</main>
+
+<script>
+if('serviceWorker' in navigator){
+  window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});});
+}
+</script>
+</body>
+</html>
